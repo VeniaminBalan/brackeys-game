@@ -1,0 +1,118 @@
+[gd_scene load_steps=6 format=3 uid="uid://d3yg8oduixhg7"]
+
+[ext_resource type="FontFile" uid="uid://dxsbb2cd8fxvx" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="1_flhq8"]
+[ext_resource type="Theme" uid="uid://dq00fxbljcbmj" path="res://assets/themes/default_theme.tres" id="1_whicr"]
+[ext_resource type="Script" uid="uid://bemb01rgtq1q6" path="res://scenes/ui/menus/main_menu.gd" id="2_ct055"]
+[ext_resource type="FontFile" uid="uid://cjn7bqcorryu4" path="res://assets/fonts/PixelOperator8.ttf" id="2_h1kbi"]
+[ext_resource type="PackedScene" uid="uid://ddie1k5kmydk1" path="res://scenes/ui/menus/multiplayer_menu.tscn" id="5_p0q51"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_whicr")
+script = ExtResource("2_ct055")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0117647, 0.14902, 0.34902, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("1_flhq8")
+theme_override_font_sizes/font_size = 32
+text = "Welcome!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="StartGameButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../QuitGameButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../QuitGameButton")
+theme_override_fonts/font = ExtResource("2_h1kbi")
+theme_override_font_sizes/font_size = 16
+text = "Start Game"
+
+[node name="SettingsButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../StartGameButton")
+focus_neighbor_bottom = NodePath("../MultiplayerButton")
+focus_next = NodePath("../MultiplayerButton")
+focus_previous = NodePath("../StartGameButton")
+theme_override_fonts/font = ExtResource("2_h1kbi")
+theme_override_font_sizes/font_size = 16
+text = "Settings
+"
+
+[node name="MultiplayerButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../SettingsButton")
+focus_neighbor_bottom = NodePath("../QuitGameButton")
+focus_next = NodePath("../QuitGameButton")
+focus_previous = NodePath("../SettingsButton")
+theme_override_fonts/font = ExtResource("2_h1kbi")
+theme_override_font_sizes/font_size = 16
+text = "Multiplayer"
+
+[node name="QuitGameButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../MultiplayerButton")
+focus_neighbor_bottom = NodePath("../StartGameButton")
+focus_next = NodePath("../StartGameButton")
+focus_previous = NodePath("../MultiplayerButton")
+theme_override_fonts/font = ExtResource("2_h1kbi")
+theme_override_font_sizes/font_size = 16
+text = "Exit
+"
+
+[node name="MultiplayerMenu" parent="." instance=ExtResource("5_p0q51")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsVBox/StartGameButton" to="." method="_on_start_game"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsVBox/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsVBox/MultiplayerButton" to="." method="_on_multiplayer_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsVBox/QuitGameButton" to="." method="_on_quit_button_pressed"]
+[connection signal="become_host" from="MultiplayerMenu" to="." method="_on_multiplayer_menu_become_host"]
+[connection signal="join_as_player_2" from="MultiplayerMenu" to="." method="_on_multiplayer_menu_join_as_player_2"]
