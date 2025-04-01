@@ -6,6 +6,9 @@ func _on_body_entered(body: Node2D) -> void:
 	print("killzone entered")
 	if body is Player:
 		body.die()
+		
+	if body is MultiplayerPlayer && multiplayer.is_server():
+		body.die()
 	#timer.start()
 
 

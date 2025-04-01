@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtf6um030ncwb"]
+
+[ext_resource type="Script" uid="uid://cibiv4w8wkyav" path="res://scripts/managers/default_game_manager.gd" id="1_2hpg0"]
+[ext_resource type="PackedScene" uid="uid://f7yram7lahs7" path="res://scenes/worlds/default/world.tscn" id="2_18uay"]
+
+[node name="DefaultGameManager" type="Node"]
+script = ExtResource("1_2hpg0")
+world_scenes = Array[PackedScene]([ExtResource("2_18uay")])
+metadata/_custom_type_script = "uid://ddjygp8fgs0ln"

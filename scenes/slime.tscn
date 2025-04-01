@@ -1,8 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://cf0oxker4st5j"]
+[gd_scene load_steps=11 format=3 uid="uid://cf0oxker4st5j"]
 
 [ext_resource type="Script" uid="uid://bew60kensiekx" path="res://scripts/slime.gd" id="1_n6pvg"]
 [ext_resource type="Texture2D" uid="uid://bd8js4kneaq64" path="res://assets/sprites/slime_green.png" id="1_p2gj0"]
 [ext_resource type="PackedScene" uid="uid://dlji82orl8d2v" path="res://scenes/killzone.tscn" id="2_n6pvg"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_n6pvg"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pjw23"]
 atlas = ExtResource("1_p2gj0")
@@ -45,6 +50,9 @@ size = Vector2(10, 13)
 
 [node name="Slime" type="Node2D"]
 script = ExtResource("1_n6pvg")
+
+[node name="SlimeSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_n6pvg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -12)

@@ -11,9 +11,9 @@ var freeze = false
 @onready var timer = $Timer
 @onready var die_timer: Timer = $DieTimer
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
-@onready var camera_2d: Camera2D = $Camera2D
+@onready var player_ui: CanvasLayer = $PlayerUI
 
-var game_manager : GameManager
+var start_position : Vector2
 
 func _physics_process(delta: float) -> void:
 	if freeze:
@@ -58,13 +58,13 @@ func teleport_to(target: Vector2, delay = 1):
 	velocity = Vector2(0,0)
 	timer.start(delay)
 
-	
 
 func _on_timer_timeout() -> void:
 	freeze = false
 	show()
 	
 func collect():
+	player_ui.collect()
 	collected.emit()
 
 func die():
@@ -79,5 +79,5 @@ func _on_die():
 func _on_die_timer_timeout() -> void:
 	Engine.time_scale = 1
 	await get_tree().process_frame
-	teleport_to(game_manager.world.start_position, 0.6)
+	teleport_to(start_position, 0.6)
 	collision_shape_2d.disabled = false

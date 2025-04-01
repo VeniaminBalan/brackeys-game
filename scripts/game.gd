@@ -1,34 +1,40 @@
 extends Node2D
 class_name GameManager
 
-@export var world_scene : PackedScene
 @export var player_scene : PackedScene
 @export var ui: UI
 
-var world : World
-var player : Player
+var game_manager : BaseGameManager
+const MULTIPLAYER_MANAGER := preload("res://scripts/multiplayer/multiplayer_manager.tscn")
 
 
-func start_game() -> void:
-	print("Game started")
+func init_manager(manager_scene: PackedScene) -> void:
+	var manager = manager_scene.instantiate()
+	if manager is BaseGameManager:
+		game_manager = manager as BaseGameManager
+		add_child(game_manager)
+		move_child(game_manager, 0)
+	else:
+		push_error("[Game] ERROR: 'manager_scene' is not a instance of the BaseGameManager!")
+
+
+func _on_ui_start_game(manager: PackedScene) -> void:
+	init_manager(manager)
+	game_manager.start()
 	
-	world = world_scene.instantiate()
-	add_child(world)
-	move_child(world, 0)
-	
-	player = player_scene.instantiate()
-	add_child(player)
-	player.position = world.start_position
-	player.game_manager = self
-	
-	if !player.collected.is_connected(ui._on_collected):
-		player.collected.connect(ui._on_collected)
-		
-func _on_ui_start_game() -> void:
-	start_game()
 
-func _on_ui_become_host() -> void:
-	MuliplayerManager.become_host()
+func _on_ui_become_host(manager_scene: PackedScene) -> void:
+	var manager = manager_scene.instantiate()	
+	if manager is BaseGameManager:	
+		var multiplayer_manager = MULTIPLAYER_MANAGER.instantiate()
+		add_child(multiplayer_manager)
+		move_child(multiplayer_manager, 0)
+		multiplayer_manager.become_host(manager.world_scenes[0])
+		multiplayer_manager.unique_name_in_owner = true
 
-func _on_ui_join_as_player_2(ip_address: String, port: int, name: String) -> void:
-	MuliplayerManager.join_as_player_2(ip_address, port, name)
+func _on_ui_join_as_player_2(ip_address: String, port: int, player_name: String) -> void:
+	var multiplayer_manager = MULTIPLAYER_MANAGER.instantiate()
+	add_child(multiplayer_manager)
+	move_child(multiplayer_manager, 0)
+	multiplayer_manager.join_as_player_2(ip_address, port, player_name)
+	multiplayer_manager.unique_name_in_owner = true

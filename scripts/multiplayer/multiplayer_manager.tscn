@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://0qa0krcfhxvc"]
+
+[ext_resource type="Script" uid="uid://v54mpnoacukh" path="res://scripts/multiplayer/muliplayer_manager.gd" id="1_hf1w8"]
+[ext_resource type="PackedScene" uid="uid://cwcowkdxfktk0" path="res://scenes/player.tscn" id="2_v20jg"]
+
+[node name="MultiplayerManager" type="Node2D"]
+script = ExtResource("1_hf1w8")
+player_scene = ExtResource("2_v20jg")
+
+[node name="Level" type="Node" parent="."]
+
+[node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://f7yram7lahs7")
+spawn_path = NodePath("../Level")
+spawn_limit = 1
+
+[node name="Players" type="Node" parent="."]
+
+[node name="PlayersSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://c4w4fq26j48ip")
+spawn_path = NodePath("../Players")
+spawn_limit = 4

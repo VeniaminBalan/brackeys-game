@@ -1,7 +1,9 @@
 extends Control
 class_name MultiplayerMenu
 
-signal become_host()
+@export var manager_scene = PackedScene
+
+signal become_host(world_scene: PackedScene)
 signal join_as_player_2(ip_address: String, port: int, name: String)
 
 
@@ -10,7 +12,7 @@ func _process(delta: float) -> void:
 		hide()
 
 func _on_host_game_pressed() -> void:
-	become_host.emit()
+	become_host.emit(manager_scene)
 
 func _on_join_as_player_2_pressed() -> void:
 	join_as_player_2.emit("127.0.0.1", 7777, "Player 2")

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ddie1k5kmydk1"]
+[gd_scene load_steps=4 format=3 uid="uid://ddie1k5kmydk1"]
 
 [ext_resource type="Theme" uid="uid://dq00fxbljcbmj" path="res://assets/themes/default_theme.tres" id="1_24lsf"]
 [ext_resource type="Script" uid="uid://clnxa60ejoq5d" path="res://scenes/ui/menus/multiplayer_menu.gd" id="2_yqp5i"]
+[ext_resource type="PackedScene" uid="uid://dtf6um030ncwb" path="res://scripts/managers/default_game_manager.tscn" id="3_38r0u"]
 
 [node name="MultiplayerMenu" type="Control"]
 layout_mode = 3
@@ -12,6 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_24lsf")
 script = ExtResource("2_yqp5i")
+manager_scene = ExtResource("3_38r0u")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

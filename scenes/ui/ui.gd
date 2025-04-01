@@ -3,22 +3,16 @@ class_name UI
 
 @export var main_menu_scene: PackedScene
 @export var in_game_menu_scene: PackedScene
-@onready var score_label: Label = %Score
 
 var main_menu: Control = null
 var in_game_menu: Control = null
 
-signal become_host()
+signal become_host(world_scene: PackedScene)
 signal join_as_player_2(ip_address: String, port: int, name: String)
-signal start_game()
+signal start_game(manager: PackedScene)
 
-var score = 0:
-	set(value):
-		score = value
-		_update_score_label()
 
 func _ready() -> void:
-	_update_score_label()
 	_create_main_menu()
 
 func _process(delta: float) -> void:
@@ -30,12 +24,6 @@ func _on_in_game_menu_back_to_game() -> void:
 	if in_game_menu:
 		in_game_menu.visible = false
 		Engine.time_scale = 1
-
-func _update_score_label():
-	score_label.text = str(score)
-
-func _on_collected() -> void:
-	score += 1
 
 ### 🚀 Create & Subscribe to Main Menu
 func _create_main_menu():
@@ -74,13 +62,13 @@ func toggle_menus(mode: MenuMode):
 			_create_in_game_menu()
 
 ### 🚀 Handling Menu Transitions
-func _on_main_menu_start_game() -> void:
+func _on_main_menu_start_game(manager: PackedScene) -> void:
 	print("UI start game signal emitted")
-	start_game.emit()
+	start_game.emit(manager)
 	toggle_menus(MenuMode.InGame)  # Switch to in-game menu
 
-func _on_multiplayer_menu_become_host() -> void:
-	become_host.emit()
+func _on_multiplayer_menu_become_host(world_scene: PackedScene) -> void:
+	become_host.emit(world_scene)
 	toggle_menus(MenuMode.InGame)
 
 func _on_multiplayer_menu_join_as_player_2(ip_address: String, port: int, name: String) -> void:

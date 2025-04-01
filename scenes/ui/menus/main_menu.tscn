@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://d3yg8oduixhg7"]
+[gd_scene load_steps=7 format=3 uid="uid://d3yg8oduixhg7"]
 
 [ext_resource type="FontFile" uid="uid://dxsbb2cd8fxvx" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="1_flhq8"]
 [ext_resource type="Theme" uid="uid://dq00fxbljcbmj" path="res://assets/themes/default_theme.tres" id="1_whicr"]
 [ext_resource type="Script" uid="uid://bemb01rgtq1q6" path="res://scenes/ui/menus/main_menu.gd" id="2_ct055"]
 [ext_resource type="FontFile" uid="uid://cjn7bqcorryu4" path="res://assets/fonts/PixelOperator8.ttf" id="2_h1kbi"]
+[ext_resource type="PackedScene" uid="uid://dtf6um030ncwb" path="res://scripts/managers/default_game_manager.tscn" id="3_oj1oe"]
 [ext_resource type="PackedScene" uid="uid://ddie1k5kmydk1" path="res://scenes/ui/menus/multiplayer_menu.tscn" id="5_p0q51"]
 
 [node name="MainMenu" type="Control"]
@@ -15,6 +16,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_whicr")
 script = ExtResource("2_ct055")
+game_managers = Array[PackedScene]([ExtResource("3_oj1oe")])
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
