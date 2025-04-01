@@ -26,7 +26,7 @@ jobs:
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
 
       - name: Export Game (Windows)
-        run: godot -v --export "Windows Desktop" ./build/windows/$EXPORT_NAME.exe
+        run: godot -v --export-release "Windows Desktop" ./build/windows/${EXPORT_NAME}.exe
           
 
   release:
