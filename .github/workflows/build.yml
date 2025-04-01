@@ -5,22 +5,28 @@ on:
     tags:
       - '*'  # Triggers on version tags like v1.0, v1.1
 
+env:
+  GODOT_VERSION: 4.4
+  EXPORT_NAME: demo_game
+
+
 jobs:
   build:
     name: Build Game
     runs-on: ubuntu-latest
-    container: barichello/godot-ci:4.4  # Use a pre-built Godot 4.3 CI container
+    container: barichello/godot-ci:4.4
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Setup Export Directory
-        run: mkdir -p build/
+        run: |
+          mkdir -v -p build/linux build/windows build/mac build/web ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
 
       - name: Export Game (Windows)
-        run: |
-          godot --headless --export-release "Windows Desktop" "build/your-game-name.exe"
+        run: godot -v --export "Windows Desktop" ./build/windows/$EXPORT_NAME.exe
           
 
   release:
