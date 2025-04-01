@@ -27,8 +27,14 @@ jobs:
 
       - name: Export Game (Windows)
         run: godot --headless -v --export-release "Windows Desktop" ./build/windows/${EXPORT_NAME}.exe
-          
 
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: ./build/windows/
+
+          
   release:
     name: Create GitHub Release
     needs: build
@@ -41,8 +47,8 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: GameBuild
-          path: build/
+          name: windows
+          path: ./build/windows/
 
       - name: Create Release
         uses: ncipollo/release-action@v1
