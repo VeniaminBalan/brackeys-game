@@ -3,7 +3,7 @@ name: Build and Release Game
 on:
   push:
     tags:
-      - "v*"  # Triggers on version tags like v1.0, v1.1
+      - '*'  # Triggers on version tags like v1.0, v1.1
 
 jobs:
   build:
