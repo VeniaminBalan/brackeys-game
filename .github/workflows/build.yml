@@ -2,8 +2,8 @@ name: Build and Release Game
 
 on:
   push:
-    tags:
-      - '*'  # Triggers on version tags like v1.0, v1.1
+    branches:
+      - main
 
 env:
   GODOT_VERSION: 4.4
