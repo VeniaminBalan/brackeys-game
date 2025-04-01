@@ -33,26 +33,10 @@ jobs:
         with:
           name: windows
           path: ./build/windows/
-
-          
-  release:
-    name: Create GitHub Release
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Download Artifacts
-        uses: actions/download-artifact@v4
+      
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: windows
-          path: ./build/windows/
-
-      - name: Create Release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/*"
-          tag: ${{ github.ref_name }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_unmatched_files: true
+          generate_release_notes: true
+          files: ./build/windows/
