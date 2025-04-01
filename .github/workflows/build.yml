@@ -1,0 +1,46 @@
+name: Build and Release Game
+
+on:
+  push:
+    tags:
+      - "v*"  # Triggers on version tags like v1.0, v1.1
+
+jobs:
+  build:
+    name: Build Game
+    runs-on: ubuntu-latest
+    container: barichello/godot-ci:4.4  # Use a pre-built Godot 4.3 CI container
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Export Directory
+        run: mkdir -p build/
+
+      - name: Export Game (Windows)
+        run: |
+          godot --headless --export-release "Windows Desktop" "build/your-game-name.exe"
+          
+
+  release:
+    name: Create GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: GameBuild
+          path: build/
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/*"
+          tag: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
