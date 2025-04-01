@@ -34,9 +34,10 @@ jobs:
           name: windows
           path: ./build/windows/
       
-      - name: Release
-        uses: softprops/action-gh-release@v1
+      - name: Publish All Files to GitHub Releases
+        uses: softprops/action-gh-release@v2
         with:
-          fail_on_unmatched_files: true
-          generate_release_notes: true
-          files: ./build/windows/
+          tag_name: ${{ github.ref_name }}
+          files: .build/windows/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
